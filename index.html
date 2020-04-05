@@ -48,7 +48,7 @@
         return (window.innerHeight < MAX_CANVAS_HEIGHT) ? window.innerHeight : MAX_CANVAS_HEIGHT;
       }
       function setGroundY() {
-        return (window.innerHeight - GROUND_FROM_DOWN_DISTANCE);
+        return (CANVAS_HEIGHT - GROUND_FROM_DOWN_DISTANCE);
       }
       function setBackgroundYOffset() {
         return - (150 + MAX_CANVAS_HEIGHT - window.innerHeight - GROUND_FROM_DOWN_DISTANCE);

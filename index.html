@@ -2,16 +2,20 @@
 <html>
   <meta charset="UTF-8">
   <head>
+    <link href="https://fonts.googleapis.com/css2?family=Acme&display=swap" rel="stylesheet">
     <title>Moja pierwsza gra w JavaScript v1.0</title>
   </head>
-  <body>
+  <body style="margin: 0px; font-family: 'Acme', sans-serif;">
     <script>
 // CONSTS
-      var CANVAS_WIDTH = 800;
-      var CANVAS_HEIGHT = 600;
-      var BACKGROUND_WIDTH = 1000;
-      var BACKGROUND_Y_OFFSET = -210;
-      var GROUND_Y = 540;
+      var MAX_CANVAS_WIDTH = 1920;
+      var MAX_CANVAS_HEIGHT = 1080;
+      var CANVAS_WIDTH = setWindowWidth();
+      var CANVAS_HEIGHT = setWindowHeight();
+      var GROUND_FROM_DOWN_DISTANCE = 100;
+      var GROUND_Y = setGroundY();
+      var BACKGROUND_WIDTH = 1920;
+      var BACKGROUND_Y_OFFSET = setBackgroundYOffset();
       var JUMP_KEYCODE = 32;
       var MIN_DISTANCE_BETWEEN_ENEMYS = 400;
       var MAX_DISTANCE_BETWEEN_ENEMYS = 1200;
@@ -20,6 +24,7 @@
       var START_GAME_MODE = 0;
       var PLAY_GAME_MODE = 1;
       var GAME_OVER_GAME_MODE = 2;
+      var GAME_OVER_TEXT = 'GAME OVER'
 
       var HERO_WIDTH = 181;
       var HERO_HEIGHT = 229;
@@ -36,6 +41,19 @@
       var ENEMY_ANIMATION_SPEED = 5;
       var ENEMY_X_SPEED = 4;
 
+      function setWindowWidth() {
+        return (window.innerWidth < MAX_CANVAS_WIDTH) ? window.innerWidth : MAX_CANVAS_WIDTH;
+      }
+      function setWindowHeight() {
+        return (window.innerHeight < MAX_CANVAS_HEIGHT) ? window.innerHeight : MAX_CANVAS_HEIGHT;
+      }
+      function setGroundY() {
+        return (window.innerHeight - GROUND_FROM_DOWN_DISTANCE);
+      }
+      function setBackgroundYOffset() {
+        return - (150 + MAX_CANVAS_HEIGHT - window.innerHeight - GROUND_FROM_DOWN_DISTANCE);
+      }
+
 // CONFIG
       var canvas = document.createElement('canvas');
       var c = canvas.getContext('2d');
@@ -50,7 +68,7 @@
       var bush2Image = new Image();
       heroImage.src = 'images/animatedHero.png';
       enemyImage.src = 'images/animatedRobot.png';
-      backgroundImage.src = 'images/background.png';
+      backgroundImage.src = 'images/background2.png';
       bush1Image.src = 'images/bush1.png';
       bush2Image.src = 'images/bush2.png';
 
@@ -283,7 +301,7 @@
         c.drawImage(backgroundImage, backgroundX + BACKGROUND_WIDTH, BACKGROUND_Y_OFFSET);
 
         // Ground
-        c.fillStyle = 'OliveDrab';
+        c.fillStyle = 'MediumSeaGreen';
         c.fillRect(0, GROUND_Y - 40, CANVAS_WIDTH, CANVAS_HEIGHT - GROUND_Y + 40);
 
         // Bush
@@ -301,20 +319,24 @@
 
         // Distance
         var heroDistance = heroPositionX / 100;
-        c.fillStyle = 'white';
-        c.font = '48px sans-serif';
+        c.fillStyle = 'black';
+        c.font = '48px Acme';
         c.fillText(heroDistance.toFixed(0) + 'm', 20, 40);
 
         // Health
         c.fillStyle = 'blue';
-        c.fillRect(400, 10, heroHealth / HERO_MAX_HEALTH * 380, 20);
+        c.fillRect((window.innerWidth - 400), 10, heroHealth / HERO_MAX_HEALTH * 380, 20);
         c.strokeStyle = 'green';
-        c.strokeRect(400, 10, 380, 20);
+        c.strokeRect((window.innerWidth - 400), 10, 380, 20);
 
         if (gameMode === GAME_OVER_GAME_MODE) {
-          c.fillStyle = 'red';
-          c.font = '96px sans-serif';
-          c.fillText('GAME OVER', 120, 300);
+          c.fillStyle = 'Red';
+          c.font = '96px Acme';
+
+          let textPositionX = (window.innerWidth - c.measureText(GAME_OVER_TEXT).width) / 2;
+          let textPositionY = (window.innerHeight - 90) / 2;
+
+          c.fillText(GAME_OVER_TEXT, textPositionX.toFixed(0), textPositionY.toFixed(0));
         }
       }
 

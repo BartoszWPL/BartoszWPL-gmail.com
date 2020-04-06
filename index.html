@@ -3,9 +3,9 @@
   <meta charset="UTF-8">
   <head>
     <link href="https://fonts.googleapis.com/css2?family=Acme&display=swap" rel="stylesheet">
-    <title>Moja pierwsza gra w JavaScript v1.0</title>
+    <title>Moja pierwsza gra w JavaScript v1.1</title>
   </head>
-  <body style="margin: 0px; font-family: 'Acme', sans-serif;">
+  <body style="margin: 0px; font-family: 'Acme', sans-serif; background-color: MediumSeaGreen">
     <script>
 // CONSTS
       var MAX_CANVAS_WIDTH = 1920;
@@ -51,7 +51,11 @@
         return (CANVAS_HEIGHT - GROUND_FROM_DOWN_DISTANCE);
       }
       function setBackgroundYOffset() {
-        return - (150 + MAX_CANVAS_HEIGHT - window.innerHeight - GROUND_FROM_DOWN_DISTANCE);
+        if (MAX_CANVAS_HEIGHT > window.innerHeight) {
+          return - (150 + MAX_CANVAS_HEIGHT - window.innerHeight - GROUND_FROM_DOWN_DISTANCE);
+        } else {
+          return 0
+        }
       }
 
 // CONFIG
@@ -333,8 +337,8 @@
           c.fillStyle = 'Red';
           c.font = '96px Acme';
 
-          let textPositionX = (window.innerWidth - c.measureText(GAME_OVER_TEXT).width) / 2;
-          let textPositionY = (window.innerHeight - 90) / 2;
+          let textPositionX = (CANVAS_WIDTH - c.measureText(GAME_OVER_TEXT).width) / 2;
+          let textPositionY = (CANVAS_HEIGHT - 90) / 2;
 
           c.fillText(GAME_OVER_TEXT, textPositionX.toFixed(0), textPositionY.toFixed(0));
         }

@@ -9,11 +9,13 @@ var enemyImage = new Image();
 var backgroundImage = new Image();
 var bush1Image = new Image();
 var bush2Image = new Image();
+var heart = new Image();
 heroImage.src = 'images/animatedHero.png';
 enemyImage.src = 'images/animatedRobot.png';
 backgroundImage.src = 'images/background2.png';
 bush1Image.src = 'images/bush1.png';
 bush2Image.src = 'images/bush2.png';
+heart.src = 'images/heart.png';
 
 var heroSpriteSheet = {
   nrFramesPerRow: 5,
@@ -45,7 +47,9 @@ var enemyCollisionRectangle = {
 
 var enemyData = [];
 
-var heroHealth = HERO_MAX_HEALTH;
+//var heroHealth = HERO_MAX_HEALTH;
+var heroLives = HERO_MAX_HEALTH;
+var heroLivesFlag = true;
 var heroPositionX = CANVAS_WIDTH / 2;
 var heroPositionY = -180;
 var heroYSpeed = 0;

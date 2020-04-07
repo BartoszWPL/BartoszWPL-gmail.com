@@ -20,6 +20,12 @@ function draw() {
   c.fillStyle = 'MediumSeaGreen';
   c.fillRect(0, GROUND_Y - 40, CANVAS_WIDTH, CANVAS_HEIGHT - GROUND_Y + 40);
 
+  // Heart
+  var heart_space = 0;
+  for (var i = 0; i < heroLives; i++) {
+    heart_space += 50;
+    c.drawImage(heart, CANVAS_WIDTH - heart_space - 10, 10);
+  }
   // Bush
   for (var i = 0; i < bushData.length; i++) {
     c.drawImage(bushData[i].image, bushData[i].x - shakenCameraX, GROUND_Y - bushData[i].y - shakenCameraY);
@@ -38,12 +44,6 @@ function draw() {
   c.fillStyle = 'black';
   c.font = '48px Acme';
   c.fillText(heroDistance.toFixed(0) + 'm', 20, 40);
-
-  // Health
-  c.fillStyle = 'blue';
-  c.fillRect((window.innerWidth - 400), 10, heroHealth / HERO_MAX_HEALTH * 380, 20);
-  c.strokeStyle = 'green';
-  c.strokeRect((window.innerWidth - 400), 10, 380, 20);
 
   if (gameMode === GAME_OVER_GAME_MODE) {
     c.fillStyle = 'Red';

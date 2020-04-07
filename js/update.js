@@ -40,11 +40,16 @@ function update() {
   var heroTouchedAEnemy = updateEnemy();
   if (heroTouchedAEnemy) {
     screenshake = true;
-    if (heroHealth > 0) { heroHealth -= 1; }
+    if ((heroLives > 0) && heroLivesFlag) {
+      heroLives -= 1;
+      heroLivesFlag = false;
+    }
+  } else {
+    heroLivesFlag = true;
   }
 
 // check if game over
-  if (heroHealth <= 0) {
+  if (heroLives <= 0) {
     gameMode = GAME_OVER_GAME_MODE;
     screenshake = false;
   }

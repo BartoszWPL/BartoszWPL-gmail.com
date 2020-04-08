@@ -1,7 +1,7 @@
 function update() {
   if (gameMode != PLAY_GAME_MODE) { return };
   gameFrameCounter = gameFrameCounter + 1;
-  heroPositionX = heroPositionX + HERO_X_SPEED;
+  heroPositionX = heroPositionX + heroXSpeed;
   if (jumpKeyIsPressed && !heroIsInTheAir) {
     heroYSpeed = -HERO_JUMP_SPEED;
     heroIsInTheAir = true;
@@ -12,6 +12,11 @@ function update() {
     heroPositionY = GROUND_Y - HERO_HEIGHT;
     heroYspeed = 0;
     heroIsInTheAir = false;
+  }
+
+// update game speed
+  if ((heroPositionX % GAME_SPEED_DISTANCE_INCREMENT) === 0) {
+    heroXSpeed += 1;
   }
 
 // update animation

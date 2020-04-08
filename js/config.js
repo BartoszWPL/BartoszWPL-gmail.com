@@ -39,7 +39,7 @@ var heroCollisionRectangle = {
 };
 
 var enemyCollisionRectangle = {
-  xOffset: 60,
+  xOffset: 55,
   yOffset: 20,
   width: 50,
   height: 100
@@ -52,6 +52,7 @@ var heroLives = HERO_MAX_HEALTH;
 var heroLivesFlag = true;
 var heroPositionX = CANVAS_WIDTH / 2;
 var heroPositionY = -180;
+var heroXSpeed = HERO_X_SPEED;
 var heroYSpeed = 0;
 var jumpKeyIsPressed = false;
 var heroIsInTheAir = true;

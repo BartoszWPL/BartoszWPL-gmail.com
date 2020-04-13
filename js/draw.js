@@ -21,39 +21,86 @@ function draw() {
   c.fillRect(0, GROUND_Y - 40, CANVAS_WIDTH, CANVAS_HEIGHT - GROUND_Y + 40);
 
   // Heart
-  var heart_space = 0;
-  for (var i = 0; i < heroLives; i++) {
-    heart_space += 50;
-    c.drawImage(heart, CANVAS_WIDTH - heart_space - 10, 10);
-  }
-  // Bush
-  for (var i = 0; i < bushData.length; i++) {
-    c.drawImage(bushData[i].image, bushData[i].x - shakenCameraX, GROUND_Y - bushData[i].y - shakenCameraY);
-  }
+  if (gameMode !== START_GAME_MODE) {
+    var heart_space = 0;
+    for (var i = 0; i < heroLives; i++) {
+      heart_space += 50;
+      c.drawImage(heart, CANVAS_WIDTH - heart_space - 10, 10);
+    }
+    // Bush
+    for (var i = 0; i < bushData.length; i++) {
+      c.drawImage(bushData[i].image, bushData[i].x - shakenCameraX, GROUND_Y - bushData[i].y - shakenCameraY);
+    }
 
-  // Enemy
-  for (var i = 0; i < enemyData.length; i++) {
-    drawAnimatedSprite(enemyData[i].x - shakenCameraX, enemyData[i].y - shakenCameraY, enemyData[i].frameNr, enemySpriteSheet);
+    // Enemy
+    for (var i = 0; i < enemyData.length; i++) {
+      drawAnimatedSprite(enemyData[i].x - shakenCameraX, enemyData[i].y - shakenCameraY, enemyData[i].frameNr, enemySpriteSheet);
+    }
+
+    // Hero
+    drawAnimatedSprite(heroPositionX - shakenCameraX, heroPositionY - shakenCameraY, heroFrameNr, heroSpriteSheet);
+
+    // Distance
+    var heroDistance = heroPositionX / 100;
+    setFont('46px Acme', 'black')
+    c.fillText(heroDistance.toFixed(0) + 'm', 20, 40);
   }
-
-  // Hero
-  drawAnimatedSprite(heroPositionX - shakenCameraX, heroPositionY - shakenCameraY, heroFrameNr, heroSpriteSheet);
-
-  // Distance
-  var heroDistance = heroPositionX / 100;
-  c.fillStyle = 'black';
-  c.font = '48px Acme';
-  c.fillText(heroDistance.toFixed(0) + 'm', 20, 40);
 
   if (gameMode === GAME_OVER_GAME_MODE) {
-    c.fillStyle = 'Red';
-    c.font = '96px Acme';
-
+    setFont('96px Acme', 'red')
     let textPositionX = (CANVAS_WIDTH - c.measureText(GAME_OVER_TEXT).width) / 2;
     let textPositionY = (CANVAS_HEIGHT - 90) / 2;
 
     c.fillText(GAME_OVER_TEXT, textPositionX.toFixed(0), textPositionY.toFixed(0));
+
+    setFont('46px Acme', 'black')
+    let restartTextPositionX = (CANVAS_WIDTH - c.measureText(START_GAME_TEXT).width) / 2;
+    let restartTextPositionY = ((CANVAS_HEIGHT - 90) / 2) + 60;
+
+    c.fillText(START_GAME_TEXT, restartTextPositionX.toFixed(0), restartTextPositionY.toFixed(0));
+
+    if (startKeyIsPressed) {
+      resetGameState();
+    };
   }
+
+  // Start screen
+  if (gameMode === START_GAME_MODE) {
+    startGameState();
+    startGameFrameCounter = startGameFrameCounter + 1;
+    drawAnimatedSprite(heroPositionX, heroPositionY, heroFrameNr, heroSpriteSheet);
+    updateAnimation(startGameFrameCounter);
+    startGameSubtitles();
+
+    if (startKeyIsPressed) {
+      resetGameState();
+      gameMode = PLAY_GAME_MODE;
+    }
+  }
+}
+
+function startGameSubtitles() {
+  setFont('96px Acme', 'red')
+  let textPositionX = (CANVAS_WIDTH - c.measureText(HELLO_GAME_TEXT).width) / 2;
+  let textPositionY = (CANVAS_HEIGHT - 90) / 2;
+  c.fillText(HELLO_GAME_TEXT, textPositionX.toFixed(0), textPositionY.toFixed(0));
+
+  setFont('46px Acme', 'black')
+  let restartTextPositionX = (CANVAS_WIDTH - c.measureText(START_GAME_TEXT).width) / 2;
+  let restartTextPositionY = ((CANVAS_HEIGHT - 90) / 2) + 60;
+  c.fillText(START_GAME_TEXT, restartTextPositionX.toFixed(0), restartTextPositionY.toFixed(0));
+
+  setFont('28px Acme', 'black')
+  let authorTextPosition1X = (CANVAS_WIDTH - c.measureText(HELLO_GAME_AUTHOR_TEXT_1).width) / 2;
+  c.fillText(HELLO_GAME_AUTHOR_TEXT_1, authorTextPosition1X, 50);
+
+  let authorTextPosition2X = (CANVAS_WIDTH - c.measureText(HELLO_GAME_AUTHOR_TEXT_2).width) / 2;
+  c.fillText(HELLO_GAME_AUTHOR_TEXT_2, authorTextPosition2X, 80);
+}
+
+function setFont(font, fontColor) {
+  c.fillStyle = fontColor;
+  c.font = font;
 }
 
 function drawAnimatedSprite(screenX, screenY, frameNr, spriteSheet) {

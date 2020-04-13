@@ -20,15 +20,7 @@ function update() {
   }
 
 // update animation
-  if (heroFrameNr >= HERO_NR_ANIMATION_FRAMES) {
-    heroFrameNr = 0;
-  }
-  if ((gameFrameCounter % HERO_ANIMATION_SPEED) === 0) {
-    heroFrameNr = heroFrameNr + 1;
-    if (heroFrameNr >= HERO_NR_ANIMATION_FRAMES) {
-      heroFrameNr = 0;
-    }
-  }
+  updateAnimation(gameFrameCounter);
 
 // update camera
   cameraX = heroPositionX - 100;
@@ -57,6 +49,18 @@ function update() {
   if (heroLives <= 0) {
     gameMode = GAME_OVER_GAME_MODE;
     screenshake = false;
+  }
+}
+
+function updateAnimation(counter) {
+  if (heroFrameNr >= HERO_NR_ANIMATION_FRAMES) {
+    heroFrameNr = 0;
+  }
+  if ((counter % HERO_ANIMATION_SPEED) === 0) {
+    heroFrameNr = heroFrameNr + 1;
+    if (heroFrameNr >= HERO_NR_ANIMATION_FRAMES) {
+      heroFrameNr = 0;
+    }
   }
 }
 

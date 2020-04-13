@@ -55,11 +55,13 @@ var heroPositionY = -180;
 var heroXSpeed = HERO_X_SPEED;
 var heroYSpeed = 0;
 var jumpKeyIsPressed = false;
+var startKeyIsPressed = false;
 var heroIsInTheAir = true;
 var heroFrameNr = 0;
 var gameFrameCounter = 0;
+var startGameFrameCounter = 0;
 var screenshake = false;
-var gameMode = PLAY_GAME_MODE;
+var gameMode = START_GAME_MODE;
 
 var cameraX = 0;
 var cameraY = 0;
@@ -84,4 +86,25 @@ function generateBushes() {
     bushX += 150 + Math.random() * 200;
   }
   return generatedBushData;
+}
+
+function resetGameState() {
+  heroLives = HERO_MAX_HEALTH;
+  heroLivesFlag = true;
+  heroPositionX = CANVAS_WIDTH / 2;
+  heroPositionY = -180;
+  heroXSpeed = HERO_X_SPEED;
+  heroYSpeed = 0;
+  jumpKeyIsPressed = false;
+  startKeyIsPressed = false;
+  heroIsInTheAir = true;
+  heroFrameNr = 0;
+  gameFrameCounter = 0;
+  screenshake = false;
+  gameMode = START_GAME_MODE;
+}
+
+function startGameState() {
+  heroPositionX = (CANVAS_WIDTH / 2) - 100;
+  heroPositionY = GROUND_Y - HERO_HEIGHT + 10;
 }

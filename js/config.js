@@ -71,6 +71,7 @@ var bushData = generateBushes();
 function generateBushes() {
   var generatedBushData = [];
   var bushX = 0;
+
   while (bushX < (2 * CANVAS_WIDTH)) {
     var bushImage;
     if (Math.random() >= 0.5) {
@@ -107,4 +108,6 @@ function resetGameState() {
 function startGameState() {
   heroPositionX = (CANVAS_WIDTH / 2) - 100;
   heroPositionY = GROUND_Y - HERO_HEIGHT + 10;
+  bushData = generateBushes();
+  enemyData = [];
 }
